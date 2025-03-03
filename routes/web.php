@@ -9,6 +9,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ShooperController;
+use App\Http\Controllers\TaoBangController;
+use App\Http\Controllers\CreateTableController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ViewErrorBag;
 
@@ -70,3 +72,7 @@ Route::get('/database', function () {
     });
     echo 'Đã thực hiện khởi tạo bảng thành công';
 });
+
+Route::get('/database1', [TaoBangController::class, 'createTable']);
+
+Route::get('/database_ban_hang', [CreateTableController::class, 'create_Table']);
