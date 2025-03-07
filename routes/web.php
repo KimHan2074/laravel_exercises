@@ -59,7 +59,7 @@ Route::resource('products', ProductController::class);
 
 Route::get('/showproducts', [ProductsController::class, 'product']);
 
-Route::get('/index', [PageController::class, 'getIndex']);
+Route::get('/trangchu', [PageController::class, 'getIndex']);
 
 Route::get('/homepage', [ShooperController::class, 'getIndex']);
 
