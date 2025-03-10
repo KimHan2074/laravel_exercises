@@ -45,81 +45,26 @@
 						</div>
 
 						<div class="row">
-							<div class="col-sm-3">
-								<div class="single-item">
-									<div class="single-item-header">
-										<a href="product.html"><img src="source/image/product/flower-fruits636102461981788938.jpg" alt="" style="width: 270px; height: 312px"></a>
-									</div>
-									<div class="single-item-body">
-										<p class="single-item-title">Sample Woman Top</p>
-										<p class="single-item-price">
-											<span>$34.55</span>
-										</p>
-									</div>
-									<div class="single-item-caption">
-										<a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
-										<a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-3">
-								<div class="single-item">
-									<div class="ribbon-wrapper"><div class="ribbon sale">Sale</div></div>
-
-									<div class="single-item-header">
-										<a href="product.html"><img src="source/image/product/COFFE-CHOCOLATE636098977566220885.jpg" alt="" style="width: 270px; height: 312px"></a>
-									</div>
-									<div class="single-item-body">
-										<p class="single-item-title">Sample Woman Top</p>
-										<p class="single-item-price">
-											<span class="flash-del">$34.55</span>
-											<span class="flash-sale">$33.55</span>
-										</p>
-									</div>
-									<div class="single-item-caption">
-										<a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
-										<a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
-										<div class="clearfix"></div>
+							@foreach($products as $product)
+								<div class="col-sm-3">
+									<div class="single-item">
+										<div class="single-item-header">
+											<a href="product.html"><img src="source/image/product/{{$product->image}}" alt="" style="width: 270px; height: 312px"></a>
+										</div>
+										<div class="single-item-body">
+											<p class="single-item-title">Sample Woman Top</p>
+											<p class="single-item-price">
+												<span>$34.55</span>
+											</p>
+										</div>
+										<div class="single-item-caption">
+											<a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
+											<a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
+											<div class="clearfix"></div>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="col-sm-3">
-								<div class="single-item">
-									<div class="single-item-header">
-										<a href="product.html"><img src="source/image/product/strawberry-delight636102445035635173.jpg" alt="" style="width: 270px; height: 312px"></a>
-									</div>
-									<div class="single-item-body">
-										<p class="single-item-title">Sample Woman Top</p>
-										<p class="single-item-price">
-											<span>$34.55</span>
-										</p>
-									</div>
-									<div class="single-item-caption">
-										<a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
-										<a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-3">
-								<div class="single-item">
-									<div class="single-item-header">
-										<a href="product.html"><img src="source/image/product/chocolate-fruit636098975917921990.jpg" alt="" style="width: 270px; height: 312px"></a>
-									</div>
-									<div class="single-item-body">
-										<p class="single-item-title">Sample Woman Top</p>
-										<p class="single-item-price">
-											<span>$34.55</span>
-										</p>
-									</div>
-									<div class="single-item-caption">
-										<a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
-										<a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-							</div>
+							@endforeach
 						</div>
 					</div> <!-- .beta-products-list -->
 
@@ -132,159 +77,49 @@
 							<div class="clearfix"></div>
 						</div>
 						<div class="row">
-							<div class="col-sm-3">
-								<div class="single-item">
-									<div class="single-item-header">
-										<a href="product.html"><img src="source/image/product/sli12.jpg" alt="" style="width: 270px; height: 312px"></a>
-									</div>
-									<div class="single-item-body">
-										<p class="single-item-title">Sample Woman Top</p>
-										<p class="single-item-price">
-											<span>$34.55</span>
-										</p>
-									</div>
-									<div class="single-item-caption">
-										<a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
-										<a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-3">
-								<div class="single-item">
-									<div class="ribbon-wrapper"><div class="ribbon sale">Sale</div></div>
-
-									<div class="single-item-header">
-										<a href="product.html"><img src="source/image/product/maxresdefault.jpg" alt="" style="width: 270px; height: 312px"></a>
-									</div>
-									<div class="single-item-body">
-										<p class="single-item-title">Sample Woman Top</p>
-										<p class="single-item-price">
-											<span class="flash-del">$34.55</span>
-											<span class="flash-sale">$33.55</span>
-										</p>
-									</div>
-									<div class="single-item-caption">
-										<a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
-										<a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
-										<div class="clearfix"></div>
+							@foreach($topProducts1 as $product)
+								<div class="col-sm-3">
+									<div class="single-item">
+										<div class="single-item-header">
+											<a href="product.html"><img src="source/image/product/{{$product->image}}" alt="" style="width: 270px; height: 312px"></a>
+										</div>
+										<div class="single-item-body">
+											<p class="single-item-title">Sample Woman Top</p>
+											<p class="single-item-price">
+												<span>$34.55</span>
+											</p>
+										</div>
+										<div class="single-item-caption">
+											<a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
+											<a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
+											<div class="clearfix"></div>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="col-sm-3">
-								<div class="single-item">
-									<div class="single-item-header">
-										<a href="product.html"><img src="source/image/product/all1).jpg" alt="" style="width: 270px; height: 312px"></a>
-									</div>
-									<div class="single-item-body">
-										<p class="single-item-title">Sample Woman Top</p>
-										<p class="single-item-price">
-											<span>$34.55</span>
-										</p>
-									</div>
-									<div class="single-item-caption">
-										<a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
-										<a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-3">
-								<div class="single-item">
-									<div class="single-item-header">
-										<a href="product.html"><img src="source/image/product/seafood curry_large-900x900.jpg" alt="" style="width: 270px; height: 312px"></a>
-									</div>
-									<div class="single-item-body">
-										<p class="single-item-title">Sample Woman Top</p>
-										<p class="single-item-price">
-											<span>$34.55</span>
-										</p>
-									</div>
-									<div class="single-item-caption">
-										<a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
-										<a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-							</div>
+							@endforeach
 						</div>
 						<div class="space40">&nbsp;</div>
 						<div class="row">
-							<div class="col-sm-3">
-								<div class="single-item">
-									<div class="single-item-header">
-										<a href="product.html"><img src="source/image/product/crepedau.jpg" alt="" style="width: 270px; height: 312px"></a>
-									</div>
-									<div class="single-item-body">
-										<p class="single-item-title">Sample Woman Top</p>
-										<p class="single-item-price">
-											<span>$34.55</span>
-										</p>
-									</div>
-									<div class="single-item-caption">
-										<a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
-										<a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-3">
-								<div class="single-item">
-									<div class="ribbon-wrapper"><div class="ribbon sale">Sale</div></div>
-
-									<div class="single-item-header">
-										<a href="product.html"><img src="source/image/product/cupcake.jpg" alt="" style="width: 270px; height: 312px"></a>
-									</div>
-									<div class="single-item-body">
-										<p class="single-item-title">Sample Woman Top</p>
-										<p class="single-item-price">
-											<span class="flash-del">$34.55</span>
-											<span class="flash-sale">$33.55</span>
-										</p>
-									</div>
-									<div class="single-item-caption">
-										<a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
-										<a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
-										<div class="clearfix"></div>
+							@foreach($topProducts2 as $product)
+								<div class="col-sm-3">
+									<div class="single-item">
+										<div class="single-item-header">
+											<a href="product.html"><img src="source/image/product/{{$product->image}}" alt="" style="width: 270px; height: 312px"></a>
+										</div>
+										<div class="single-item-body">
+											<p class="single-item-title">Sample Woman Top</p>
+											<p class="single-item-price">
+												<span>$34.55</span>
+											</p>
+										</div>
+										<div class="single-item-caption">
+											<a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
+											<a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
+											<div class="clearfix"></div>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="col-sm-3">
-								<div class="single-item">
-									<div class="single-item-header">
-										<a href="product.html"><img src="source/image/product/banhtraicay.jpg" alt="" style="width: 270px; height: 312px"></a>
-									</div>
-									<div class="single-item-body">
-										<p class="single-item-title">Sample Woman Top</p>
-										<p class="single-item-price">
-											<span>$34.55</span>
-										</p>
-									</div>
-									<div class="single-item-caption">
-										<a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
-										<a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-3">
-								<div class="single-item">
-									<div class="single-item-header">
-										<a href="product.html"><img src="source/image/product/sukemdau.jpg" alt="" style="width: 270px; height: 312px"></a>
-									</div>
-									<div class="single-item-body">
-										<p class="single-item-title">Sample Woman Top</p>
-										<p class="single-item-price">
-											<span>$34.55</span>
-										</p>
-									</div>
-									<div class="single-item-caption">
-										<a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
-										<a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-							</div>
+							@endforeach
 						</div>
 					</div> <!-- .beta-products-list -->
 				</div>
