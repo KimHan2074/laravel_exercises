@@ -11,18 +11,19 @@ class PageController
     public function getIndex()
     {
         $slide = Slide::all();
-        $products = Product::where('id_type', 4)
-                   ->where('id', '>=', 34)
-                   ->limit(4)
-                   ->get();
-        $topProducts1 = Product::where('id_type', 1)
-                   ->limit(4)
-                   ->get();
-        $topProducts2 = Product::where('id_type', 7)
-                   ->limit(4)
-                   ->get();
+        $newproducts = Product::where('new', 1)
+                       ->paginate(4);
 
+        // $topProducts1 = Product::where('id_type', 1)
+        //            ->limit(4)
+        //            ->get();
+        // $topProducts2 = Product::where('id_type', 7)
+        //            ->limit(4)
+        //            ->get();
 
-        return view('page.trangchu', compact('slide', 'products', 'topProducts1', 'topProducts2'));
+        $promotion_products = Product::where('promotion_price', '<>', 0)
+                              ->paginate(8);
+
+        return view('page.trangchu', compact('slide', 'newproducts', 'promotion_products'));
     }
 }
