@@ -60,6 +60,7 @@ Route::resource('products', ProductController::class);
 Route::get('/showproducts', [ProductsController::class, 'product']);
 
 Route::get('/trangchu', [PageController::class, 'getIndex']);
+Route::get('/type/{id}', [PageController::class, 'getLoaiSp']);							
 
 Route::get('/homepage', [ShooperController::class, 'getIndex']);
 
