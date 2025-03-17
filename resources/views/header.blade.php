@@ -90,7 +90,7 @@
             <div class="visible-xs clearfix"></div>
             <nav class="main-menu">
                 <ul class="l-inline ov">
-                    <li><a href="/trangchu">Trang chủ</a></li>
+                    <li><a href="/">Trang chủ</a></li>
                     <li><a href="/type/1"> Loại sản phẩm</a>						
                         <ul class="sub-menu">						
                             @foreach($categories as $loai)						
