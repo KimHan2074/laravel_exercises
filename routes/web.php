@@ -11,6 +11,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\ShooperController;
 use App\Http\Controllers\TaoBangController;
 use App\Http\Controllers\CreateTableController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ViewErrorBag;
 
@@ -59,8 +60,20 @@ Route::resource('products', ProductController::class);
 
 Route::get('/showproducts', [ProductsController::class, 'product']);
 
-Route::get('/trangchu', [PageController::class, 'getIndex']);
-Route::get('/type/{id}', [PageController::class, 'getLoaiSp']);							
+Route::get('/', [PageController::class, 'getIndex']);
+Route::get('/type/{id}', [PageController::class, 'getLoaiSp']);	
+Route::get('/detail/{id}', [PageController::class, 'getDetail']);			
+Route::get('/contact', [PageController::class, 'showContact']);
+Route::get('/aboutus', [PageController::class, 'showAboutUs']);
+Route::get('/admin', [PageController::class, 'getIndexAdmin']);
+Route::get('/admin-add-form', [PageController::class, 'showAdminAdd'])->name('add-product');	
+Route::post('/admin-add-form', [PageController::class, 'postAdminAdd']);											
+Route::get('/admin-edit-form/{id}', [PageController::class, 'getAdminEdit']);												
+Route::post('/admin-edit', [PageController::class, 'postAdminEdit']);
+Route::post('/admin-delete/{id}', [PageController::class, 'postAdminDelete']);														
+
+
+
 
 Route::get('/homepage', [ShooperController::class, 'getIndex']);
 

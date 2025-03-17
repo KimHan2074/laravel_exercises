@@ -49,7 +49,7 @@
                                 <div class="col-sm-3">
                                     <div class="single-item">
                                         <div class="single-item-header">
-                                            <a href="detail/{{$new->id}}">
+                                            <a href="/detail/{{$new->id}}">
                                                 <img width="200" height="200" src="/source/image/product/{{$new->image}}" alt="">
                                             </a>
                                         </div>
@@ -84,7 +84,7 @@
                                             </a>
 
 											
-                                            <a class="beta-btn primary" href="">
+                                            <a class="beta-btn primary" href="/detail/{{$new->id}}">
                                                 Details <i class="fa fa-chevron-right"></i>
                                             </a>
 
@@ -114,8 +114,8 @@
                                 <div class="col-sm-3">
                                     <div class="single-item" style="margin-bottom: 30px;">
                                         <div class="single-item-header">
-                                            <a href="">
-                                                <img width="200" height="200" src="/source/image/product/{{$km->image}}" alt="">
+                                            <a href="/detail/{{ $km->id }}">
+                                                <img width="200" height="200" src="/source/image/product/{{ $km->image }}" alt="">
                                             </a>
                                         </div>
 
@@ -140,7 +140,7 @@
                                                 <i class="fa fa-heart"></i>
                                             </a>
 
-                                            <a class="beta-btn primary" href="">
+                                            <a class="beta-btn primary" href="/detail/{{$km->id}}">
                                                 Details <i class="fa fa-chevron-right"></i>
                                             </a>
 
