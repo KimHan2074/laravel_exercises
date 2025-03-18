@@ -48,7 +48,7 @@
                                 <div class="col-sm-4">
                                     <div class="single-item" style="margin-bottom: 30px;">
                                         <div class="single-item-header">
-                                            <a href="">
+                                            <a href="/detail/{{$sp->id}}">
                                                 <img width="200" height="200" src="/source/image/product/{{$sp->image}}" alt="">
                                             </a>
                                         </div>
@@ -95,7 +95,7 @@
                                 <div class="col-sm-3">
                                     <div class="single-item" style="margin-bottom: 30px;">
                                         <div class="single-item-header">
-                                            <a href="">
+                                            <a href="/detail/{{$khac->id}}">
                                                 <img width="200" height="200" src="/source/image/product/{{$khac->image}}" alt="">
                                             </a>
                                         </div>
@@ -119,7 +119,7 @@
                                             <a class="add-to-cart pull-left" href="shopping_cart.html">
                                                 <i class="fa fa-shopping-cart"></i>
                                             </a>
-                                            <a class="beta-btn primary" href="product.html">
+                                            <a class="beta-btn primary" href="/detail/{{$khac->id}}">
                                                 Details <i class="fa fa-chevron-right"></i>
                                             </a>
                                             <div class="clearfix"></div>

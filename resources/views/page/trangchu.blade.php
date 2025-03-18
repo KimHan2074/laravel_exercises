@@ -56,7 +56,7 @@
 
                                         @if($new->promotion_price != 0)
                                             <div class="ribbon-wrapper">
-                                                <div class="ribbon sale">Sale</div>
+                                                <div class="ribbon sale">Hanna</div>
                                             </div>
                                         @endif
 

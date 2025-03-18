@@ -23,6 +23,8 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('header', function ($view) {				
             $categories = TypeProduct::all();				
             $view->with('categories', $categories);				
-        });				                   
+        });			
+        
+        
     }
 }

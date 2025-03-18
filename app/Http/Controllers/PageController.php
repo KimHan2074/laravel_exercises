@@ -148,4 +148,13 @@ class PageController
         return $this->getIndexAdmin();
     }
 
+
+    public function search(Request $request)
+    {
+        $keyword = $request->input('search'); 
+        
+        $results = Product::where('name', 'LIKE', "%{$keyword}%")->get();
+
+        return view('page.search-results', compact('results'));
+    }
 }
