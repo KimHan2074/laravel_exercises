@@ -19,13 +19,6 @@ class PageController
         $newproducts = Product::where('new', 1)
                        ->paginate(4);
 
-        // $topProducts1 = Product::where('id_type', 1)
-        //            ->limit(4)
-        //            ->get();
-        // $topProducts2 = Product::where('id_type', 7)
-        //            ->limit(4)
-        //            ->get();
-
         $promotion_products = Product::where('promotion_price', '<>', 0)
                               ->paginate(8);
 

@@ -21,7 +21,7 @@ class ProductRequest extends FormRequest
             'inputPromotionPrice' => 'nullable|numeric|min:0|lt:inputPrice',
             'inputUnit' => 'required|string|max:50',
             'inputNew' => 'required|boolean',
-            'inputType' => 'required|integer|exists:product_types,id',
+            'inputType' => 'required|integer|exists:type_products,id',
         ];
     }
 
