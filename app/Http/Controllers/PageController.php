@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Models\Slide;
 use App\Models\Product;
 use App\Models\TypeProduct;
 use App\Models\Comment;
 use App\Models\BillDetail;
+use App\Models\User;
+
 
 class PageController 
 {

@@ -12,6 +12,7 @@ use App\Http\Controllers\ShooperController;
 use App\Http\Controllers\TaoBangController;
 use App\Http\Controllers\CreateTableController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ViewErrorBag;
 
@@ -60,7 +61,7 @@ Route::resource('products', ProductController::class);
 
 Route::get('/showproducts', [ProductsController::class, 'product']);
 
-Route::get('/', [PageController::class, 'getIndex']);
+Route::get('/', [PageController::class, 'getIndex'])->name('home');
 Route::get('/type/{id}', [PageController::class, 'getLoaiSp']);	
 Route::get('/detail/{id}', [PageController::class, 'getDetail']);			
 Route::get('/contact', [PageController::class, 'showContact']);
@@ -73,7 +74,11 @@ Route::post('/admin-edit', [PageController::class, 'postAdminEdit']);
 Route::post('/admin-delete/{id}', [PageController::class, 'postAdminDelete']);														
 Route::get('search', [PageController::class, 'search']) -> name('search');	
 
-
+Route::get('/sign-up-form', [UserController::class, 'showSignUpForm'])->name('sign-up');
+Route::post('/sign-up-form', [UserController::class, 'register']);
+Route::get('/login-form', [UserController::class, 'showLogInForm'])->name('log-in');
+Route::post('/login-form', [UserController::class, 'Login']);
+Route::get('/logout', [UserController::class, 'Logout']);
 
 Route::get('/homepage', [ShooperController::class, 'getIndex']);
 
