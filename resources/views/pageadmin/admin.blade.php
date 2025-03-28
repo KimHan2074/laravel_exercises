@@ -1,26 +1,11 @@
-@extends('master')																
-@section('content')																
-<div class="space50">&nbsp;</div>																
-<div class="container beta-relative">																
-    <div class="container" style="margin-bottom: 20px;">																
-        <div class="col-12 col-md-6" style="background: red; color: white;">
-            Số sản phẩm: {{ count($products) }}
-        </div>																
-        <div class="col-12 col-md-6" style="background: blue; color: white;">
-            Đã bán: <br />																
-            <p>Tổng: {{ $sumSold }}</p>																
-            <p>Hôm nay: 1</p>																
-            <p>Tháng này: 3</p>																
-            <p>Năm nay: 4</p>																
-        </div>																
-    </div>																
+@extends('master')
 
+@section('content')
+<div class="space50">&nbsp;</div>
+<div class="container beta-relative">
     <div class="pull-left">
         <h2>List</h2>
-    </div>																
-    <div class="pull-right">
-        <a href="#" class="btn btn-primary">Xuất ra PDF</a>
-    </div>																
+    </div>
 
     <table id="table_admin_product" class="table table-striped display">
         <thead>
@@ -28,50 +13,47 @@
                 <th scope="col">ID</th>
                 <th scope="col">Image</th>
                 <th scope="col">Name</th>
-                <th scope="col">Type</th>
                 <th scope="col">Description</th>
-                <th scope="col">Unit Price</th>
-                <th scope="col">Promotion Price</th>
-                <th scope="col">Unit</th>
-                <th scope="col">New</th>
-                <th scope="col">
-                    <a href="{{ route('add-product') }}" class="btn btn-primary" style="width:80px;">Add</a>
-                </th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Created At</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach($products as $product)
             <tr class="products-list-admin">
-                <th scope="row">{{ $product->id }}</th>
+                <th scope="row">{{ $product->id ?? 'N/A' }}</th>
                 <td>
-                    <img src="source/image/product/{{ $product->image }}" alt="image" style="height: 100px;" />
+                    <img src="{{ $product->avatar ?? 'default.png' }}" alt="avatar" style="height: 100px;" />
                 </td>
-                <td>{{ $product->name }}</td>
-                <td>{{ $product->id_type }}</td>
-                <td>{{ $product->description }}</td>
-                <td>{{ $product->unit_price }}</td>
-                <td>{{ $product->promotion_price }}</td>
-                <td>{{ $product->unit }}</td>
-                <td>{{ $product->new }}</td>
+                <td>{{ $product->name ?? 'No name' }}</td>
+                <td>{{ $product->description ?? 'No description available' }}</td>
+                <td>{{ $product->price ?? '0' }}</td>
+                <td>{{ $product->quantity ?? '0' }}</td>
+                <td>{{ $product->created_at ? $product->created_at->format('d-m-Y H:i:s') : 'N/A' }}</td>
                 <td>
-                    <a href="admin-edit-form/{{ $product->id }}" class="btn btn-warning" style="width:80px;">Edit</a>
-                    <form role="form" action="admin-delete/{{ $product->id }}" method="post">
+                    <a href="{{ url('admin-edit-form/' . $product->id) }}" class="btn btn-warning" style="width:80px;">Edit</a>
+                    
+                    <form action="{{ route('products.update', $product->id) }}" method="POST">
                         @csrf
-                        <button name="edit" type="submit" class="btn btn-danger" style="width:80px;">Delete</button>
+                        @method('PUT') 
+                        <input type="number" name="price" value="{{ $product->price }}">
+                        <button type="submit" class="btn btn-primary">Cập nhật</button>
                     </form>
-                </td>                                                                    
+                </td>
             </tr>
             @endforeach
         </tbody>
-    </table>																
+    </table>
 
-    <div class="space50">&nbsp;</div>																
-</div>																
+    <div class="space50">&nbsp;</div>
+</div>
 
 <script>
-    $(document).ready(function() {																
-        $('#table_admin_product').DataTable();																
+    $(document).ready(function() {
+        $('#table_admin_product').DataTable();
     });
-</script>																
+</script>
 
 @endsection

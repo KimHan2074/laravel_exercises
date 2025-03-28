@@ -13,6 +13,7 @@ use App\Http\Controllers\TaoBangController;
 use App\Http\Controllers\CreateTableController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FetchController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ViewErrorBag;
 
@@ -95,3 +96,11 @@ Route::get('/database', function () {
 Route::get('/database1', [TaoBangController::class, 'createTable']);
 
 Route::get('/database_ban_hang', [CreateTableController::class, 'create_Table']);
+
+
+
+
+Route::get('/products', [FetchController::class, 'index'])->name('products.index');
+Route::post('/products', [FetchController::class, 'store'])->name('products.store');
+Route::put('/products/{id}', [FetchController::class, 'update'])->name('products.update');
+Route::delete('/products/{id}', [FetchController::class, 'destroy'])->name('products.destroy');
