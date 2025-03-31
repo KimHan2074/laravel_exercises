@@ -1,84 +1,72 @@
 @extends('master')
-@section('content')
 
+@section('content')
 <div class="space50">&nbsp;</div>
 <div class="container beta-relative">
     <div class="pull-left">
-        <h2>Edit product</h2>
+        <h2>Edit Product</h2>
     </div>
-    <div class="space50">&nbsp;</div>
-    @include('error')
-    <div class="container">
-        <form action="admin-edit" method="POST" enctype="multipart/form-data">
-            @csrf
 
-            <div class="form-group">
-                <label for='editName'>ID</label>
-                <input type="number" class="form-control" name="editId" value="{{$product->id}}" readonly>
-            </div>
+    <!-- Error Messages -->
+    @if($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
-            <div class="form-group">
-                <label for='editName'>Name</label>
-                <input type="text" class="form-control" name="editName" id="editName" placeholder="Enter name" value="{{$product->name}}" required>
-            </div>
+    <form action="{{ route('products.update', $product['product_id']) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PATCH')
 
-            <div class="form-group">
-                <label for='editPrice'>Price</label>
-                <input type="number" min=10000 class="form-control" name="editPrice" id="editPrice" placeholder="Enter price" value="{{$product->unit_price}}" required>
-            </div>
+        <input type="hidden" name="old_image" value="{{ $product['image'] }}">
 
-            <div class="form-group">
-                <label for='editPromotionPrice'>Promotion Price</label>
-                <input type="number" min=10000 class="form-control" name="editPromotionPrice" id="editPromotionPrice" value="{{$product->promotion_price}}" placeholder="Enter promotion price">
-            </div>
+        <div class="form-group">
+            <label for="name">Product Name:</label>
+            <input type="text" class="form-control" name="name" id="name" value="{{ old('name', $product['name']) }}" required>
+        </div>
 
-            <div class="form-group">
-                <label for='editUnit'>Unit</label>
-                <input type="text" class="form-control" name="editUnit" id="editUnit" value="{{$product->unit}}" placeholder="Enter unit" required>
-            </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea class="form-control" name="description" id="description" rows="4">{{ old('description', $product['description']) }}</textarea>
+        </div>
 
-            <div class="form-group">
-                <label for='editNew'>New</label>
-                <input type="number" min=0 class="form-control" name="editNew" id="editNew" value="{{$product->new}}" placeholder="Enter new" required>
-            </div>
+        <div class="form-group">
+            <label for="unitPrice">Price:</label>
+            <input type="number" class="form-control" name="unitPrice" id="unitPrice" value="{{ old('unitPrice', $product['unitPrice']) }}" required>
+        </div>
 
-            <div class="form-group">
-                <label for='editType'>Type</label>
-                <input type="text" class="form-control" name="editType" id="editType" value="{{$product->id_type}}" placeholder="Enter type" required>
-            </div>
+        <div class="form-group">
+            <label for="promotionPrice">Promotion Price:</label>
+            <input type="number" class="form-control" name="promotionPrice" id="promotionPrice" value="{{ old('promotionPrice', $product['promotionPrice']) }}">
+        </div>
 
-            <div class="form-group">
-                <label for='editImage'>Image file</label>
-                <input type="file" class="form-control-file" name="editImage" id="editImage">
-            </div>
+        <div class="form-group">
+            <label for="image">Image:</label>
+            <input type="file" class="form-control" name="image" id="image">
+            <img src="{{ asset('storage/source/image/product/' . $product['image']) }}" alt="Product Image" style="height: 100px;">
+        </div>
 
-            <div class="form-group">
-                <img id="preview-image-before-upload" src="source/image/product/{{$product->image}}" alt="preview image" style="max-height: 250px;">
-                <script type="text/javascript">
-                    $(document).ready(function(e) {
-                        $('#editImage').change(function() {
-                            let reader = new FileReader();
-                            reader.onload = (e) => {
-                                $('#preview-image-before-upload').attr('src', e.target.result);
-                            }
-                            reader.readAsDataURL(this.files[0]);
-                        });
-                    });
-                </script>
-            </div>
+        <div class="form-group">
+            <label for="unit">Unit:</label>
+            <input type="text" class="form-control" name="unit" id="unit" value="{{ old('unit', $product['unit']) }}" required>
+        </div>
 
-            <div class="form-group">
-                <label for='editDescription'>Description</label>
-                <textarea name="editDescription" id="editDescription" required>{{$product->description}}</textarea>
-                <script>
-                    CKEDITOR.replace('editDescription');
-                </script>
-            </div>
+        <div class="form-group">
+            <label for="new">New Product:</label>
+            <select class="form-control" name="new" id="new" required>
+                <option value="1" {{ old('new', $product['new']) == 1 ? 'selected' : '' }}>Yes</option>
+                <option value="0" {{ old('new', $product['new']) == 0 ? 'selected' : '' }}>No</option>
+            </select>
+        </div>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
+        <button type="submit" class="btn btn-success">Update Product</button>
+    </form>
+
     <div class="space50">&nbsp;</div>
 </div>
-
 @endsection
+

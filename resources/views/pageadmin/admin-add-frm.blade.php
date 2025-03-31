@@ -1,83 +1,68 @@
-@extends('master')						
-@section('content')						
-						
-<div class="space50">&nbsp;</div>						
-<div class="container beta-relative">						
-    <div class="pull-left">						
-        <h2>Add Product</h2>						
-    </div>						
-    <div class="space50">&nbsp;</div>						
-    @include('error')						
+@extends('master')
 
-    <div class="container">						
-        <form action="admin-add-form" method="post" enctype="multipart/form-data">						
-            @csrf						
-            
-            <div class="form-group">						
-                <label for="inputName">Name</label>						
-                <input type="text" class="form-control" name="inputName" id="inputName" placeholder="Enter name" required>						
-            </div>						
-            
-            <div class="form-group">						
-                <label for="inputPrice">Price</label>						
-                <input type="number" min="10000" class="form-control" name="inputPrice" id="inputPrice" placeholder="Enter price" required>						
-            </div>						
+@section('content')
+<div class="space50">&nbsp;</div>
+<div class="container beta-relative">
+    <div class="pull-left">
+        <h2>Add New Product</h2>
+    </div>
 
-            <div class="form-group">						
-                <label for="inputPromotionPrice">Promotion Price</label>						
-                <input type="number" min="10000" class="form-control" name="inputPromotionPrice" id="inputPromotionPrice" placeholder="Enter promotion price">						
-            </div>						
+    <!-- Error Messages -->
+    @if($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
-            <div class="form-group">						
-                <label for="inputUnit">Unit</label>						
-                <input type="text" class="form-control" name="inputUnit" id="inputUnit" placeholder="Enter unit" required>						
-            </div>						
+    <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
 
-            <div class="form-group">						
-                <label for="inputNew">New</label>						
-                <input type="number" min="0" class="form-control" name="inputNew" id="inputNew" placeholder="Enter new" required>						
-            </div>						
+        <div class="form-group">
+            <label for="name">Product Name:</label>
+            <input type="text" class="form-control" name="name" id="name" value="{{ old('name') }}" required>
+        </div>
 
-            <div class="form-group">						
-                <label for="inputType">Type</label>						
-                <input type="text" class="form-control" name="inputType" id="inputType" placeholder="Enter type" required>						
-            </div>						
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea class="form-control" name="description" id="description" rows="4">{{ old('description') }}</textarea>
+        </div>
 
-            <div class="form-group">						
-                <label for="inputImage">Image file</label>						
-                <input type="file" class="form-control-file" name="inputImage" id="inputImage" required>						
-            </div>						
+        <div class="form-group">
+            <label for="unitPrice">Price:</label>
+            <input type="number" class="form-control" name="unitPrice" id="unitPrice" value="{{ old('unitPrice') }}" required>
+        </div>
 
-            <div class="form-group">						
-                <img id="preview-image-before-upload" src="https://prod-api.tiembanhdunglai.com/uploads/products/2023/Sep/banh-kem-whipping-co-lich-hmtraf-xoai-sz-16-2392-0-1694948441.jpeg" 
-                    alt="preview image" style="max-height: 250px;">						
+        <div class="form-group">
+            <label for="promotionPrice">Promotion Price:</label>
+            <input type="number" class="form-control" name="promotionPrice" id="promotionPrice" value="{{ old('promotionPrice') }}">
+        </div>
 
-                <script type="text/javascript">						
-                    $(document).ready(function() {						
-                        $('#inputImage').change(function() {						
-                            let reader = new FileReader();						
-                            reader.onload = (e) => {						
-                                $('#preview-image-before-upload').attr('src', e.target.result);						
-                            };						
-                            reader.readAsDataURL(this.files[0]);						
-                        });						
-                    });						
-                </script>						
-            </div>						
+        <div class="form-group">
+            <label for="image">Image:</label>
+            <input type="file" class="form-control" name="image" id="image">
+        </div>
 
-            <div class="form-group">						
-                <label for="inputDescription">Description</label>						
-                <textarea name="inputDescription" required></textarea>						
-                <script>						
-                    CKEDITOR.replace('inputDescription');						
-                </script>						
-            </div>						
+        <div class="form-group">
+            <label for="unit">Unit:</label>
+            <input type="text" class="form-control" name="unit" id="unit" value="{{ old('unit') }}" required>
+        </div>
 
-            <button type="submit" class="btn btn-primary">Submit</button>						
-        </form>						
-    </div>						
- 
-    <div class="space50">&nbsp;</div>						
-</div>						
-						
+        <div class="form-group">
+            <label for="new">New Product:</label>
+            <select class="form-control" name="new" id="new" required>
+                <option value="1" {{ old('new') == 1 ? 'selected' : '' }}>Yes</option>
+                <option value="0" {{ old('new') == 0 ? 'selected' : '' }}>No</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success">Add Product</button>
+    </form>
+
+    <div class="space50">&nbsp;</div>
+</div>
 @endsection
+

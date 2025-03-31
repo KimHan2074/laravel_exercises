@@ -67,12 +67,12 @@ Route::get('/type/{id}', [PageController::class, 'getLoaiSp']);
 Route::get('/detail/{id}', [PageController::class, 'getDetail']);			
 Route::get('/contact', [PageController::class, 'showContact']);
 Route::get('/aboutus', [PageController::class, 'showAboutUs']);
-Route::get('/admin', [PageController::class, 'getIndexAdmin']);
-Route::get('/admin-add-form', [PageController::class, 'showAdminAdd'])->name('add-product');	
-Route::post('/admin-add-form', [PageController::class, 'postAdminAdd']);											
-Route::get('/admin-edit-form/{id}', [PageController::class, 'getAdminEdit']);												
-Route::post('/admin-edit', [PageController::class, 'postAdminEdit']);
-Route::post('/admin-delete/{id}', [PageController::class, 'postAdminDelete']);														
+// Route::get('/admin', [PageController::class, 'getIndexAdmin']);
+// Route::get('/admin-add-form', [PageController::class, 'showAdminAdd'])->name('add-product');	
+// Route::post('/admin-add-form', [PageController::class, 'postAdminAdd']);											
+// Route::get('/admin-edit-form/{id}', [PageController::class, 'getAdminEdit']);												
+// Route::post('/admin-edit', [PageController::class, 'postAdminEdit']);
+// Route::post('/admin-delete/{id}', [PageController::class, 'postAdminDelete']);														
 Route::get('search', [PageController::class, 'search']) -> name('search');	
 
 Route::get('/sign-up-form', [UserController::class, 'showSignUpForm'])->name('sign-up');
@@ -99,8 +99,16 @@ Route::get('/database_ban_hang', [CreateTableController::class, 'create_Table'])
 
 
 
-
+// 🟢 Lấy danh sách sản phẩm
 Route::get('/products', [FetchController::class, 'index'])->name('products.index');
+
+Route::get('/admin-add-frm', [FetchController::class, 'create'])->name('products.create');
+// 🟢 Thêm sản phẩm mới
 Route::post('/products', [FetchController::class, 'store'])->name('products.store');
-Route::put('/products/{id}', [FetchController::class, 'update'])->name('products.update');
+
+// 🟢 Hiển thị form chỉnh sửa sản phẩm
+Route::get('/products/{id}/edit', [FetchController::class, 'edit'])->name('products.edit');
+// 🟢 Cập nhật sản phẩm (SỬA DÙNG PATCH)
+Route::patch('/products/{id}', [FetchController::class, 'update'])->name('products.update');
+
 Route::delete('/products/{id}', [FetchController::class, 'destroy'])->name('products.destroy');

@@ -4,42 +4,45 @@
 <div class="space50">&nbsp;</div>
 <div class="container beta-relative">
     <div class="pull-left">
-        <h2>List</h2>
+        <h2>Product List</h2>
     </div>
 
-    <table id="table_admin_product" class="table table-striped display">
+    <!-- Success or Error Messages -->
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @elseif(session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
+
+    <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Add New Product</a>
+
+    <table class="table table-striped" id="table_admin_product">
         <thead>
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Image</th>
                 <th scope="col">Name</th>
                 <th scope="col">Description</th>
                 <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Created At</th>
+                <th scope="col">Image</th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach($products as $product)
-            <tr class="products-list-admin">
-                <th scope="row">{{ $product->id ?? 'N/A' }}</th>
+            <tr>
+                <th scope="row">{{ $product['product_id'] }}</th>
+                <td>{{ $product['name'] }}</td>
+                <td>{{ $product['description'] }}</td>
+                <td>{{ $product['unitPrice'] }}</td>
                 <td>
-                    <img src="{{ $product->avatar ?? 'default.png' }}" alt="avatar" style="height: 100px;" />
+                    <img src="{{ asset('source/image/product/' . $product['image']) }}" alt="Product Image" style="height: 100px;">
                 </td>
-                <td>{{ $product->name ?? 'No name' }}</td>
-                <td>{{ $product->description ?? 'No description available' }}</td>
-                <td>{{ $product->price ?? '0' }}</td>
-                <td>{{ $product->quantity ?? '0' }}</td>
-                <td>{{ $product->created_at ? $product->created_at->format('d-m-Y H:i:s') : 'N/A' }}</td>
                 <td>
-                    <a href="{{ url('admin-edit-form/' . $product->id) }}" class="btn btn-warning" style="width:80px;">Edit</a>
-                    
-                    <form action="{{ route('products.update', $product->id) }}" method="POST">
+                    <a href="{{ route('products.edit', $product['product_id']) }}" class="btn btn-warning">Edit</a>
+                    <form action="{{ route('products.destroy', $product['product_id']) }}" method="POST" style="display:inline;">
                         @csrf
-                        @method('PUT') 
-                        <input type="number" name="price" value="{{ $product->price }}">
-                        <button type="submit" class="btn btn-primary">Cập nhật</button>
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">Delete</button>
                     </form>
                 </td>
             </tr>
@@ -55,5 +58,5 @@
         $('#table_admin_product').DataTable();
     });
 </script>
-
 @endsection
+
