@@ -7,7 +7,6 @@
         <h2>Product List</h2>
     </div>
 
-    <!-- Success or Error Messages -->
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @elseif(session('error'))
@@ -16,7 +15,7 @@
 
     <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Add New Product</a>
 
-    <table class="table table-striped" id="table_admin_product">
+    <table class="table table-striped table-responsive" id="table_admin_product">
         <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -32,17 +31,21 @@
             <tr>
                 <th scope="row">{{ $product['product_id'] }}</th>
                 <td>{{ $product['name'] }}</td>
-                <td>{{ $product['description'] }}</td>
-                <td>{{ $product['unitPrice'] }}</td>
+                <td>{{ $product['description'] ?? 'No description' }}</td>
+                <td>{{ number_format($product['unitPrice'], 0, ',', '.') }} VND</td>
                 <td>
-                    <img src="{{ asset('source/image/product/' . $product['image']) }}" alt="Product Image" style="height: 100px;">
+                    @if($product['image'])
+                        <img src="{{ asset('source/image/product/' . $product['image']) }}" alt="Product Image" style="height: 100px;">
+                    @else
+                        <span>No image</span>
+                    @endif
                 </td>
                 <td>
                     <a href="{{ route('products.edit', $product['product_id']) }}" class="btn btn-warning">Edit</a>
                     <form action="{{ route('products.destroy', $product['product_id']) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">Delete</button>
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
                     </form>
                 </td>
             </tr>
@@ -52,10 +55,14 @@
 
     <div class="space50">&nbsp;</div>
 </div>
+@endsection
 
+@section('scripts')
 <script>
     $(document).ready(function() {
-        $('#table_admin_product').DataTable();
+        $('#table_admin_product').DataTable({
+            responsive: true
+        });
     });
 </script>
 @endsection

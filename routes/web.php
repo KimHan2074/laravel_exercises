@@ -14,6 +14,8 @@ use App\Http\Controllers\CreateTableController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FetchController;
+use App\Http\Controllers\FetchhController;
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ViewErrorBag;
 
@@ -99,16 +101,11 @@ Route::get('/database_ban_hang', [CreateTableController::class, 'create_Table'])
 
 
 
-// 🟢 Lấy danh sách sản phẩm
-Route::get('/products', [FetchController::class, 'index'])->name('products.index');
-
-Route::get('/admin-add-frm', [FetchController::class, 'create'])->name('products.create');
-// 🟢 Thêm sản phẩm mới
-Route::post('/products', [FetchController::class, 'store'])->name('products.store');
-
-// 🟢 Hiển thị form chỉnh sửa sản phẩm
-Route::get('/products/{id}/edit', [FetchController::class, 'edit'])->name('products.edit');
-// 🟢 Cập nhật sản phẩm (SỬA DÙNG PATCH)
-Route::patch('/products/{id}', [FetchController::class, 'update'])->name('products.update');
-
-Route::delete('/products/{id}', [FetchController::class, 'destroy'])->name('products.destroy');
+Route::prefix('products')->name('products.')->group(function () {
+    Route::get('/', [FetchhController::class, 'index'])->name('index');
+    Route::get('/create', [FetchhController::class, 'create'])->name('create');
+    Route::post('/', [FetchhController::class, 'store'])->name('store');
+    Route::get('/{product_id}/edit', [FetchhController::class, 'edit'])->name('edit');
+    Route::patch('/{product_id}', [FetchhController::class, 'update'])->name('update');
+    Route::delete('/{product_id}', [FetchhController::class, 'destroy'])->name('destroy');
+});

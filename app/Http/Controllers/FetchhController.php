@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;  
 
-class FetchController extends Controller
+class FetchhController extends Controller
 {
-    protected $apiUrl = 'http://product-api-02.onrender.com/api/v1/products';
+    private $apiUrl = 'https://product-api-02.onrender.com/api/v1/products';
 
     public function index()
     {
@@ -21,6 +21,7 @@ class FetchController extends Controller
 
         return view('pageadmin.admin', compact('products')); 
     }
+
 
     public function create()
     {
@@ -65,8 +66,11 @@ class FetchController extends Controller
         
         $product = $response->json()['data'];
 
+        dd($product); 
+
         return view('pageadmin.admin-edit-frm', compact('product'));
     }
+
 
     public function update(Request $request, $product_id)
     {
@@ -98,9 +102,11 @@ class FetchController extends Controller
         return back()->withInput()->with('error', 'Có lỗi xảy ra khi cập nhật sản phẩm: ' . $response->body());
     }
 
-    public function destroy($product_id)
+    public function destroy($id)
     {
-        $response = Http::delete("{$this->apiUrl}/{$product_id}");
+        dd($id); // Kiểm tra ID nhận được có đúng không?
+
+        $response = Http::delete("{$this->apiUrl}/{$id}");
 
         if ($response->successful()) {
             return redirect()->route('products.index')->with('success', 'Sản phẩm đã bị xóa!');
