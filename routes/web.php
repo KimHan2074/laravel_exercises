@@ -60,7 +60,7 @@ Route::get('/nhapSV', [NhapSV_Controller::class, 'show_form']);
 Route::post('/nhapSV', [NhapSV_Controller::class, 'handleAddStudent'])->name('handleAddStudent');
 Route::get('/getAPI', [Covid_Controller::class, 'getData']);
 
-Route::resource('products', ProductController::class);
+// Route::resource('products', ProductController::class);
 
 Route::get('/showproducts', [ProductsController::class, 'product']);
 
@@ -99,13 +99,4 @@ Route::get('/database1', [TaoBangController::class, 'createTable']);
 
 Route::get('/database_ban_hang', [CreateTableController::class, 'create_Table']);
 
-
-
-Route::prefix('products')->name('products.')->group(function () {
-    Route::get('/', [FetchhController::class, 'index'])->name('index');
-    Route::get('/create', [FetchhController::class, 'create'])->name('create');
-    Route::post('/', [FetchhController::class, 'store'])->name('store');
-    Route::get('/{product_id}/edit', [FetchhController::class, 'edit'])->name('edit');
-    Route::patch('/{product_id}', [FetchhController::class, 'update'])->name('update');
-    Route::delete('/{product_id}', [FetchhController::class, 'destroy'])->name('destroy');
-});
+Route::resource('products', FetchhController::class);

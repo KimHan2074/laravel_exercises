@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;  
+use Illuminate\Support\Facades\Http; 
+
+
 
 class FetchhController extends Controller
 {
@@ -11,13 +13,17 @@ class FetchhController extends Controller
 
     public function index()
     {
-        $response = Http::get($this->apiUrl); 
+        $response = Http::get("$this->apiUrl/?page=1");
+        $response2 = Http::get("$this->apiUrl/?page=2");
+        $response3 = Http::get("$this->apiUrl/?page=3");
         
         if (!$response->successful()) {
             return redirect()->back()->with('error', 'Không thể lấy danh sách sản phẩm.');
         }
         
-        $products = $response->json()['data']; 
+        $products = $response->json()['data'];
+        $products = array_merge($products, $response2->json()['data']);
+        $products = array_merge($products, $response3->json()['data']);
 
         return view('pageadmin.admin', compact('products')); 
     }
@@ -29,84 +35,124 @@ class FetchhController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'unitPrice' => 'required|numeric',
-            'promotionPrice' => 'nullable|numeric',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',  
-            'unit' => 'required|string|max:255',
-            'new' => 'required|boolean',
-        ]);
+{
+    // Validate dữ liệu đầu vào
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'unitPrice' => 'required|numeric',
+        'promotionPrice' => 'nullable|numeric',
+        'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',  
+        'unit' => 'required|string|max:255',
+        'new' => 'required|boolean',
+    ]);
 
-        $dataToSend = $validatedData;
-
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('source/image/product'); 
-            $dataToSend['image'] = basename($imagePath);
-        }
-
-        $response = Http::post($this->apiUrl, $dataToSend);
-
-        if ($response->successful()) {
-            return redirect()->route('products.index')->with('success', 'Sản phẩm đã được thêm thành công!');
-        }
-
-        return back()->withInput()->with('error', 'Có lỗi xảy ra khi thêm sản phẩm: ' . $response->body());
+    // Xử lý ảnh (nếu có)
+    $imagePath = "";
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('source/image/product');
+        $imagePath = basename($imagePath); // Lưu tên file để gửi API
     }
 
-    public function edit($product_id)
-    {
-        $response = Http::get("{$this->apiUrl}/{$product_id}");
-        
-        if (!$response->successful()) {
-            return redirect()->route('products.index')->with('error', 'Không tìm thấy sản phẩm.');
-        }
-        
-        $product = $response->json()['data'];
+    // Định dạng dữ liệu gửi đi
+    $formattedData = [
+        "name" => $validatedData['name'],
+        "description" => $validatedData['description'] ?? null,
+        "unitPrice" => (float) $validatedData['unitPrice'],
+        "promotionPrice" => (float) ($validatedData['promotionPrice'] ?? 0), 
+        "image" => $imagePath, 
+        "unit" => $validatedData['unit'] ?? "cái",
+        "new" => (boolean) $validatedData['new'] ?? 0
+    ];
 
-        dd($product); 
+    // Gửi dữ liệu đến API
+    $response = Http::withHeaders([
+        'Content-Type' => 'application/json',
+    ])->post($this->apiUrl, $formattedData);
 
-        return view('pageadmin.admin-edit-frm', compact('product'));
+    // Chuyển phản hồi thành JSON
+    $responseData = $response->json();
+
+    // Chấp nhận mọi mã 2xx là thành công
+    if ($response->successful()) {
+        return redirect()->route('products.index')->with('success', 'Sản phẩm đã được tạo thành công!');
     }
 
+    return back()->withErrors([
+        'message' => 'Lỗi khi tạo sản phẩm! Mã lỗi: ' . $response->status(),
+        'response' => $responseData
+    ]);
+}
 
-    public function update(Request $request, $product_id)
-    {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'unitPrice' => 'required|numeric',
-            'promotionPrice' => 'nullable|numeric',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
-            'unit' => 'required|string|max:255',
-            'new' => 'required|boolean',
-        ]);
+public function edit($product_id)
+{
+    $response = Http::get("{$this->apiUrl}/{$product_id}");
+    
+    if (!$response->successful()) {
+        return redirect()->route('products.index')->with('error', 'Không tìm thấy sản phẩm.');
+    }
+    
+    $product = $response->json()['data'];
 
-        $dataToSend = $validatedData;
 
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('source/image/product');
-            $dataToSend['image'] = basename($imagePath);
-        } elseif ($request->has('old_image')) {
-            $dataToSend['image'] = $request->input('old_image');
-        }
+    return view('pageadmin.admin-edit-frm', compact('product'));
+}
 
-        $response = Http::patch("{$this->apiUrl}/{$product_id}", $dataToSend);
+public function update(Request $request, $id)
+{
+    // Validate dữ liệu
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'unitPrice' => 'required|numeric',
+        'promotionPrice' => 'nullable|numeric',
+        'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+        'unit' => 'required|string|max:255',
+        'new' => 'required|boolean',
+    ]);
 
-        if ($response->successful()) {
-            return redirect()->route('products.index')->with('success', 'Sản phẩm đã được cập nhật!');
-        }
-
-        return back()->withInput()->with('error', 'Có lỗi xảy ra khi cập nhật sản phẩm: ' . $response->body());
+    // Xử lý ảnh
+    $imagePath = "";
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('source/image/product');
+        $imagePath = basename($imagePath); // Lấy tên file
+    } elseif ($request->has('old_image')) {
+        $imagePath = $request->input('old_image'); // Giữ ảnh cũ nếu không có ảnh mới
     }
 
-    public function destroy($id)
-    {
-        dd($id); // Kiểm tra ID nhận được có đúng không?
+    //  Định dạng dữ liệu gửi đi
+    $formattedData = [
+        "name" => $validatedData['name'],
+        "description" => $validatedData['description'] ?? "",
+        "unitPrice" => (float) $validatedData['unitPrice'],
+        "promotionPrice" => (float) ($validatedData['promotionPrice'] ?? 0), 
+        "image" => $imagePath, 
+        "unit" => $validatedData['unit'] ?? "cái",
+        "new" => (boolean) $validatedData['new'] ?? 0
+    ];
 
-        $response = Http::delete("{$this->apiUrl}/{$id}");
+    // Gửi request cập nhật dữ liệu đến API
+    $response = Http::withHeaders([
+        'Content-Type' => 'application/json',
+    ])->put("{$this->apiUrl}/$id", $formattedData);
+
+    // Kiểm tra phản hồi từ API
+    if ($response->status() == 200) {
+        return redirect()->route('products.index')->with('success', 'Sản phẩm đã được cập nhật!');
+        // dd($formattedData);
+    }
+
+    // Trả về lỗi nếu cập nhật thất bại
+    return back()->withErrors([
+        'message' => 'Lỗi khi cập nhật sản phẩm! Mã lỗi: ' . $response->status(),
+        'response' => $response->json()
+    ]);
+}
+
+    public function destroy($product_id)
+    {
+
+        $response = Http::delete("{$this->apiUrl}/{$product_id}");
 
         if ($response->successful()) {
             return redirect()->route('products.index')->with('success', 'Sản phẩm đã bị xóa!');

@@ -1,6 +1,7 @@
 @extends('master')
 
 @section('content')
+
 <div class="space50">&nbsp;</div>
 <div class="container beta-relative">
     <div class="pull-left">
